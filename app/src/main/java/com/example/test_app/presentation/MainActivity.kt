@@ -4,11 +4,10 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.example.test_app.data.repositories.DentistryProgramRepositoryImpl
 import com.example.test_app.databinding.ActivityMainBinding
 import com.example.test_app.domain.usecase.GetDentistryProgramUseCase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 private const val EXTENDED_DENTISTRY_PROGRAM_ID = 1
@@ -36,7 +35,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getDentistryProgram(dentistryId: Int) {
-        CoroutineScope(Dispatchers.IO).launch {
+        lifecycleScope.launch {
             val dentistryProgram = getDentistryProgramUseCase.invoke(dentistryId)
             Log.d("TAG", "getDentistryProgram: $dentistryProgram")
         }
