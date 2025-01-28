@@ -1,21 +1,28 @@
 package com.example.test_app.data.repositories
 
 import com.example.test_app.data.api.ApiHelper
-import com.example.test_app.data.mappers.DentistryProgramMapper.toDomain
+import com.example.test_app.data.mappers.DentistryProgramMapper
 import com.example.test_app.data.models.DentistryProgramApiDto
 import com.example.test_app.domain.models.DentistryProgram
 import com.example.test_app.domain.repositories.DentistryProgramRepository
+import com.example.test_app.util.ExceptionHandler.runWithTryCatch
 
+/**
+ * Реализация репозитория программ стоматологии
+ */
 class DentistryProgramRepositoryImpl : DentistryProgramRepository {
-    override suspend fun getDentistryProgram(path: Int): DentistryProgram {
-        val dentistryProgramApiDto = ApiHelper.apiClient.getDentistryProgram(path).await()
-        val actionsNotNull = dentistryProgramApiDto.actions.filterNotNull()
 
-        val result = DentistryProgramApiDto(
-            dentistryProgramApiDto.description,
-            actionsNotNull
-        ).toDomain()
+    /**
+     * Реализация получения программ стоматологии
+     */
+    override suspend fun getDentistryProgram(dentistryId: Int): DentistryProgram {
+        val result = runWithTryCatch {
+            ApiHelper.apiClient.getDentistryProgram(dentistryId).await()
+        }
 
-        return result
+        return DentistryProgramMapper.toDomain(
+            result ?: DentistryProgramApiDto(description = "", actions = emptyList())
+        )
     }
+
 }

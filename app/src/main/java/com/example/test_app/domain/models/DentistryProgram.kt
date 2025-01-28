@@ -13,8 +13,11 @@ data class DentistryProgram(
 
 /**
  * Базовый класс действий(услуг) по программе стоматологии.
+ *
+ * @property type Тип действия.
  */
 sealed class DentistryAction {
+    abstract val type: String
 
     /**
      * Модель действия - Подключение к медсоветнику.
@@ -25,7 +28,7 @@ sealed class DentistryAction {
      * @property redirectTelemedSpecializationId Идентификатор специализации медсоветника.
      */
     data class RedirectToTelemed(
-        val type: String,
+        override val type: String,
         val serviceTitle: String,
         val redirectDescription: String,
         val redirectTelemedSpecializationId: Int,
@@ -39,7 +42,7 @@ sealed class DentistryAction {
      * @property serviceDescription Описание услуги.
      */
     data class ServiceDescription(
-        val type: String,
+        override val type: String,
         val title: String,
         val serviceDescription: String,
     ) : DentistryAction()
@@ -53,7 +56,7 @@ sealed class DentistryAction {
      * @property redirectSpecialtyId Идентификатор специальности специалиста.
      */
     data class RedirectToSpecialty(
-        val type: String,
+        override val type: String,
         val description: String,
         val buttonText: String,
         val redirectSpecialtyId: Int,
@@ -67,7 +70,7 @@ sealed class DentistryAction {
      * @property button Текст кнопки действия.
      */
     data class PhoneCall(
-        val type: String,
+        override val type: String,
         val number: String,
         val button: String,
     ) : DentistryAction()
