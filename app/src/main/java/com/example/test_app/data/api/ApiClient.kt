@@ -16,6 +16,6 @@ interface ApiClient {
      *
      * @param dentistryId Идентификатор программы стоматологии
      */
-    @GET("${Constants.PREFIX_API}${Constants.STOMATOLOGY_API_CATALOG}{dentistryId}")
+    @GET("${Constants.PREFIX_API}stomatology/{dentistryId}")
     fun getDentistryProgram(@Path("dentistryId") dentistryId: Int): Deferred<DentistryProgramApiDto>
 }

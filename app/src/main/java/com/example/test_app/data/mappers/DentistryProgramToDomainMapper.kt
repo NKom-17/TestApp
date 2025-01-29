@@ -5,7 +5,8 @@ import com.example.test_app.data.models.DentistryProgramApiDto
 import com.example.test_app.domain.models.DentistryProgram
 
 /**
- * Маппер DentistryProgramApiDto в DentistryProgram.
+ * Маппер data модели программы стоматологии в domain модель.
+ * @return Объект [DentistryProgram]
  */
 fun DentistryProgramApiDto.toDomain(): DentistryProgram {
     val actions = this.actions.map { action ->
